@@ -1,0 +1,70 @@
+.header {
+  max-width: 100%;
+  min-height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+@media (max-width: 320px) {
+  .header {
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media (max-width: 650px) {
+  .header {
+    margin-bottom: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+.header__auth {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+@media (max-width: 320px) {
+  .header__auth {
+    gap: 14px;
+    padding: 0;
+  }
+}
+
+.header__reg {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__signin {
+  width: 76px;
+  height: 32px;
+  background-color: #3DDC84;
+  color: black;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  border-radius: 2px;
+}
+
+.header__signup {
+  text-decoration: none;
+}
