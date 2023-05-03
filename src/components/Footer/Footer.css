@@ -1,6 +1,9 @@
 .footer {
-  width: calc(100% - 140px);
+  max-width: 1280px;
   margin: 0 auto;
+  background: #202020;
+  padding-left: 70px;
+  padding-right: 70px;
 }
 
 @media (max-width: 500px) {
@@ -16,6 +19,7 @@
   line-height: 16px;
   text-align: center;
   color: #8B8B8B;
+  margin-top: 0px;
 }
 
 @media (max-width: 500px) {
@@ -110,7 +114,7 @@
 }
 
 @media (max-width: 500px) {
-  .footer__github-link{
+  .footer__github-link {
     font-size: 12px;
     line-height: 15px;
     margin-top: 12px;
