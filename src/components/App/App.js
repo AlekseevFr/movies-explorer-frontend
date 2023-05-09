@@ -6,6 +6,7 @@ import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Movies from '../Movies/Movies'
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
 
 
 function App() {
@@ -32,6 +33,12 @@ function App() {
         </main>
         <Footer/>
       </Route>
+      <Route path="/profile">
+          <Header isLoggedIn={true} />
+          <main>
+            <Profile/>
+          </main>         
+        </Route>
     </Switch>
   </div>
 }
