@@ -4,13 +4,15 @@
   background: #202020;
   padding-left: 70px;
   padding-right: 70px;
+  text-align: center;
 }
 
 @media (max-width: 500px) {
   .footer {
-    width: calc(100% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
   }
-}
+} 
 
 .footer__title {
   font-style: normal;
