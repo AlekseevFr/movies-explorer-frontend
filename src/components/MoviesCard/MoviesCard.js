@@ -1,6 +1,6 @@
 import React from 'react';
 import './MoviesCard.css';
-import Favorite from '../../images/Favorite_icon.svg'
+import {ReactComponent as Favorite} from '../../images/Favorite_icon.svg'
 import Delete from '../../images/Delete.svg';
 
 
@@ -8,6 +8,7 @@ const MoviesCard = ({
   title,
   duration,
   poster,
+  favorite,
   isSaved
 }) => (
   <div className="moviescard">
@@ -25,16 +26,18 @@ const MoviesCard = ({
           alt="Крестик"/>
       </button>
     ) : (
-      <button className="moviescard__favorite">
-        <img className="moviescard__favorite-logo"
-          src={Favorite}
-          alt="Флажок"/>
+      <button className={
+        `moviescard__favorite ${
+          favorite ? 'moviescard__favorite_active' : ''
+        }`
+      }>
+        <Favorite className={`moviescard__favorite-logo`}/>
       </button>
     )
   }
     <img className="moviescard__poster"
       src={poster}
-      alt=""/>
+      alt="Изображение постера"/>
   </div>
 );
 

@@ -1,7 +1,12 @@
+input:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
 .content {
   max-width: 1280px;
   min-height: 674px;
   margin: 0 auto;
   background-color: #202020;
 }
-

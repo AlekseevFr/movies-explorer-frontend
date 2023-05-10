@@ -154,6 +154,11 @@
   color: #FFFFFF;
   text-decoration: none;
 }
+.aboutme__git:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
 
 
 @media (max-width: 450px) {

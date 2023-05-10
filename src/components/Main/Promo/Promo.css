@@ -75,7 +75,7 @@
   }
 }
 
-.promo__botton {
+.promo__button {
   width: 96px;
   min-height: 36px;
   gap: 10px;
@@ -83,6 +83,12 @@
   border-radius: 10px;
   margin-top: 151px;
   margin-bottom: 30px;
+}
+
+.promo__button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }
 
 .promo__navtext {

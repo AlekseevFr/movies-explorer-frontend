@@ -8,8 +8,8 @@ function Footer () {
       <div className='footer__downbar'>
         <p className='footer__year'>© 2023</p>
         <div className='footer__links'>
-        <a className='footer__praktikum-link' href='*'>Яндекс.Практикум</a>
-        <a className='footer__github-link' href='*'>Github</a>
+        <a className='footer__praktikum-link' href='https://practicum.yandex.ru/'>Яндекс.Практикум</a>
+        <a className='footer__github-link' href='https://github.com/AlekseevFr'>Github</a>
         </div>
       </div>
     </footer>

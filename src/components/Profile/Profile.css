@@ -100,7 +100,11 @@
   border: none;
   background-color: #202020;
 }
-
+.profile__edit-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
 .profile__exit-button {
   font-style: normal;
   font-weight: 500;
@@ -109,4 +113,9 @@
   color: #EE3465;
   border: none;
   background-color: #202020;
+}
+.profile__exit-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }

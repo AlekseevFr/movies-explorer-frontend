@@ -58,11 +58,18 @@
   margin-bottom: 60px;
 }
 
+.notfound__button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
 @media (max-width: 800px) {
   .notfound__button {
     margin-bottom: 222px;
   }
 }
+
 @media (max-width: 400px) {
   .notfound__button {
     margin-bottom: 30px;

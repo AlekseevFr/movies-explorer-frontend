@@ -16,7 +16,7 @@ function Register() {
         <button type="submit" className="auth__submit-button">Войти</button>
       </form>
       <p className="auth__redirect">Ещё не зарегистрированы?
-        <Link className="auth__sign" to="/sign-in">
+        <Link className="auth__sign" to="/sign-up">
           Регистрация</Link>
       </p>
 

@@ -45,6 +45,12 @@
   margin-top: 80px;
 }
 
+.movieslist__button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
 @media (max-width: 900px) {
   .movieslist__button {
     width: calc(100% - 60px);

@@ -73,7 +73,7 @@
 }
 
 .auth__input_error {
-  color:#EE3465;
+  color: #EE3465;
 }
 
 .auth__error {
@@ -100,6 +100,12 @@
   margin-top: 70px;
 }
 
+.auth__submit-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
 @media (max-width: 450px) {
   .auth__submit-button {
     margin-top: 172px;
@@ -124,4 +130,10 @@
   color: #4285F4;
   text-decoration: none;
   margin-left: 6px;
+}
+
+.auth__sign:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }

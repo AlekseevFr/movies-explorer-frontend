@@ -9,17 +9,15 @@
   z-index: 9999;
 }
 
- .navigation::before {
-	content: '';
-	background: #000;
-	position: fixed; 
-	left: 0;
-	top: 0;
-	width: 100%; 
-	height: 100%;
-	opacity: 0.7;
-	z-index: -1;
-} 
+.navigation::before {
+  content: '';
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
 
 @media (max-width: 550px) {
   .navigation {
@@ -40,12 +38,18 @@
   width: 100%;
   text-align: end;
   height: 22px;
-  background: #202020;
+  background: initial;
   color: #FFFF;
   border: none;
   padding-right: 23px;
   margin-top: 23px;
   margin-bottom: 105px;
+}
+
+.navigation__close:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }
 
 .navigation__box {
@@ -69,6 +73,9 @@
 
 .navigation__link:hover {
   text-decoration: underline;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }
 
 .navigation__in {
@@ -99,6 +106,12 @@
   line-height: 16px;
   text-decoration: none;
   color: #FFFFFF;
+}
+
+.navigation__acc:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
 }
 
 .navigation__icon {
