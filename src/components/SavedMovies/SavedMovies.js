@@ -3,6 +3,7 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Navigation from '../Navigation/Navigation';
 
 function SavedMovies() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,7 @@ function SavedMovies() {
             :
             <MoviesCardList isSaved = {true}/>
         }
+        <Navigation />
       </section>
     </>
   );
