@@ -2,6 +2,7 @@ input:hover {
   cursor: pointer;
   opacity: 0.5;
   transition: 1s;
+  outline: 1px solid #2be080;
 }
 
 .content {

@@ -22,32 +22,25 @@ function App() {
         <Footer/>
       </Route>
       <Route path="/movies">
-        <Header isLoggedIn={true}/>
-        <main>
-          <Movies/>
-        </main>
-        <Footer/>
+        <Movies/>
       </Route>
       <Route path="/saved-movies">
-        <SavedMovies />
+        <SavedMovies/>
       </Route>
       <Route path="/profile">
-          <Header isLoggedIn={true} />
-          <main>
-            <Profile/>
-          </main>         
-        </Route>
-        <Route exact path="/signup">
-          <main>
-            <Register />
-          </main>
-        </Route>
-        <Route exact path="/signin">
-          <main>
-            <Login />
-          </main>
-        </Route>
-        
+        <Profile/>
+      </Route>
+      <Route exact path="/signup">
+        <main>
+          <Register/>
+        </main>
+      </Route>
+      <Route exact path="/signin">
+        <main>
+          <Login/>
+        </main>
+      </Route>
+
     </Switch>
   </div>
 }

@@ -40,7 +40,7 @@ function SavedMovies() {
         () => setIsOpen(false)
       }/>
     } </>
-  );
+  );  
 }
 
 export default SavedMovies;
