@@ -30,7 +30,7 @@ function Movies() {
           <SearchForm/>
           <section className="movies">
             {
-            isLoading ? <Preloader/>: <MoviesCardList isSaved={true}/>
+            isLoading ? <Preloader/>: <MoviesCardList isSaved={false}/>
           } </section>
         </main>
         <Footer/>
@@ -44,19 +44,3 @@ function Movies() {
 }
 
 export default Movies;
-//   return (
-//     <>
-//     <SearchForm />
-//       <section className="movies">
-//       {
-//           isLoading ?
-//             <Preloader />
-//             :
-//             <MoviesCardList isSaved = {false}/>
-//         }
-//       </section>
-//       </>
-//   );
-// }
-
-// export default Movies;

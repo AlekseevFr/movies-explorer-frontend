@@ -3,7 +3,7 @@ import './AboutMe.css'
 import avatar from '../../../images/Avatar.jpg';
 
 function AboutMe() {
-  return <section className='aboutme'>
+  return <section className='aboutme' id="aboutme">
     <h3 className='aboutme__title'>Студент</h3>
     <div className='aboutme__line'></div>
     <div className='aboutme__card'>

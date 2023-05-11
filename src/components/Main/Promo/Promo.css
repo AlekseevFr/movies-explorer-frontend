@@ -76,6 +76,8 @@
 }
 
 .promo__button {
+  display: flex;
+  justify-content: center;
   width: 96px;
   min-height: 36px;
   gap: 10px;
@@ -92,6 +94,10 @@
 }
 
 .promo__navtext {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
