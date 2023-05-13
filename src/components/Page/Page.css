@@ -1,7 +1,8 @@
-.content {
+.page {
   max-width: 1280px;
-  min-height: 674px;
   margin: 0 auto;
+}
+.page__menu_opened {
   background: #202020;
-  margin-top: 20px;
+  opacity: 0.7;
 }

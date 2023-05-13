@@ -1,7 +1,7 @@
 .portfolio {
   width: calc(100% - 140px);
   margin: 0 auto;
-  padding-bottom: 110px;
+  padding-bottom: 190px;
 }
 
 @media (max-width: 850px) {
@@ -74,7 +74,7 @@
   line-height: 50px;
   letter-spacing: -0.04em;
   color: #FFFFFF;
-  margin-bottom: 22px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 850px) {

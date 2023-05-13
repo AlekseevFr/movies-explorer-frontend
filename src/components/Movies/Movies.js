@@ -6,22 +6,21 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
+import Page from '../Page/Page'
 
 
 function Movies() {
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(()=>{
-    setTimeout(()=>{
-        setIsLoading(false);
-    },1000);
-  },[]);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   return (
     <>
-      <div className={
-        isOpen ? 'movies__menu_opened' : 'movies__menu'
-      }>
+      <Page isOpen={isOpen}>
         <Header isLoggedIn={true}
           handleMenuClick={
             () => setIsOpen(!isOpen)
@@ -34,13 +33,14 @@ function Movies() {
           } </section>
         </main>
         <Footer/>
-      </div>
+      </Page>
+
       {
       isOpen && <Navigation handleClose={
         () => setIsOpen(false)
       }/>
     } </>
-  );  
+  );
 }
 
 export default Movies;

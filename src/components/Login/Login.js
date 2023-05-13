@@ -10,13 +10,13 @@ function Register() {
       <h2 className="auth__title">Рады видеть!</h2>
       <form className="auth__form">
         <label className="auth__input-label">E-mail</label>
-        <input type="email" className="auth__input" autoComplete="off" required/>
+        <input type="email" className="auth__input" autoComplete="off" placeholder='E-mail' required/>
         <label className="auth__input-label">Пароль</label>
-        <input type="password" className="auth__input" autoComplete="off" minLength="8" required/>
+        <input type="password" className="auth__input" placeholder='Пароль' autoComplete="off" minLength="8" required/>
         <button type="submit" className="auth__submit-button">Войти</button>
       </form>
       <p className="auth__redirect">Ещё не зарегистрированы?
-        <Link className="auth__sign" to="/sign-up">
+        <Link className="auth__sign" to="/signup">
           Регистрация</Link>
       </p>
 

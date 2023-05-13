@@ -16,9 +16,7 @@ function App() {
     <Switch>
       <Route exact path="/">
         <Header isLoggedIn={false}></Header>
-        <main>
-          <Main/>
-        </main>
+        <Main/>
         <Footer/>
       </Route>
       <Route path="/movies">

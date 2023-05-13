@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
+import Page from '../Page/Page'
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <div className={
-        isOpen ? 'movies__menu_opened' : 'movies__menu'
-      }>
+      <Page isOpen={isOpen}>
         <Header isLoggedIn={true}
           handleMenuClick={
             () => setIsOpen(!isOpen)
@@ -36,7 +35,7 @@ function Profile() {
             </div>
           </section>
         </main>
-      </div>
+        </Page>
       {
       isOpen && <Navigation handleClose={
         () => setIsOpen(false)
