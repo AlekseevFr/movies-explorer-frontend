@@ -1,0 +1,139 @@
+.auth {
+  width: 396px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+  margin-bottom: 70px;
+
+}
+
+@media (max-width: 800px) {
+  .auth {
+    margin-top: 232px;
+    margin-bottom: 232px;
+  }
+}
+
+@media (max-width: 450px) {
+  .auth {
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    margin-top: 56px;
+    margin-bottom: 30px;
+  }
+}
+
+.auth__title {
+  margin-top: 40px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFFFFF;
+}
+
+@media (max-width: 450px) {
+  .auth__title {
+    margin-bottom: 40px;
+  }
+}
+
+.auth__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+}
+
+.auth__input-label {
+  text-align: start;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+
+.auth__input {
+  width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  background: #2F2F2F;
+  border-radius: 8px;
+  color: #FFFFFF;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+
+.auth__input_error {
+  color: #EE3465;
+}
+
+.auth__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  margin-top: 10px;
+}
+
+.auth__submit-button {
+  width: 100%;
+  height: 45px;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  background: #4285F4;
+  border-radius: 3px;
+  color: #FFFFFF;
+  margin-top: 70px;
+}
+
+.auth__submit-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+@media (max-width: 450px) {
+  .auth__submit-button {
+    margin-top: 172px;
+  }
+}
+
+.auth__redirect {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8B8B8B;
+}
+
+.auth__sign {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #4285F4;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.auth__sign:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}

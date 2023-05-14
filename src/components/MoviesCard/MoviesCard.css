@@ -1,0 +1,167 @@
+.moviescard {
+  display: grid;
+  grid-template-columns: 226px 28px;
+  grid-template-rows: repeat(3, min-content);
+  box-sizing: border-box;
+  object-fit: cover;
+}
+
+.moviescard__info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 14px;
+}
+
+.moviescard__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  color: #FFFFFF;
+  margin: 0px;
+}
+
+.moviescard__duration {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8B8B8B;
+  margin-top: 8px;
+  margin-bottom: 14px;
+}
+
+.moviescard__favorite {
+  width: 30px;
+  height: 30px;
+  background: #313131;
+  border-radius: 36px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.moviescard__favorite:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+@media (max-width: 1200px) {
+  .moviescard__favorite {
+    margin-left: 70px
+  }
+}
+
+@media (max-width: 1150px) {
+  .moviescard__favorite {
+    margin-left: 50px
+  }
+}
+
+@media (max-width: 1080px) {
+  .moviescard__favorite {
+    margin-left: 50px
+  }
+}
+
+@media (max-width: 1000px) {
+  .moviescard__favorite {
+    margin-left: 100px
+  }
+}
+
+@media (max-width: 860px) {
+  .moviescard__favorite {
+    margin-left: 80px
+  }
+}
+
+@media (max-width: 790px) {
+  .moviescard__favorite {
+    margin-left: 60px
+  }
+}
+
+@media (max-width: 730px) {
+  .moviescard__favorite {
+    margin-left: 45px
+  }
+}
+
+@media (max-width: 655px) {
+  .moviescard__favorite {
+    margin-left: 40px
+  }
+}
+
+@media (max-width: 651px) {
+  .moviescard__favorite {
+    margin-left: 250px
+  }
+}
+
+@media (max-width: 540px) {
+  .moviescard__favorite {
+    margin-left: 180px
+  }
+}
+
+@media (max-width: 495px) {
+  .moviescard__favorite {
+    margin-left: 120px
+  }
+}
+
+@media (max-width: 435px) {
+  .moviescard__favorite {
+    margin-left: 70px
+  }
+}
+
+@media (max-width: 380px) {
+  .moviescard__favorite {
+    margin-left: 30px
+  }
+}
+
+.moviescard__delete-favorite {
+  width: 30px;
+  height: 30px;
+  background: #313131;
+  border-radius: 36px;
+  border: none;
+  margin-bottom: 15px;
+}
+
+.moviescard__delete-favorite:hover {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 1s;
+}
+
+.moviescard__poster {
+  width: 100%;
+  height: 203px;
+  box-sizing: border-box;
+  object-fit: cover;
+  grid-column: 1 / 4;
+}
+
+@media (max-width: 651px) {
+  .moviescard__poster {
+    height: 100%;
+  }
+}
+
+.moviescard__favorite_active {
+  background: #3DDC84;
+  border: none;
+}
+
+.moviescard__favorite_active svg {
+  fill: #FFFFFF;
+}
+
+.moviescard__favorite_active svg path {
+  stroke: #FFFFFF;
+}
