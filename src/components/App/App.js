@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, useHistory} from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main';
 import Header from '../Header/Header'
@@ -9,9 +9,42 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import mainapi from '../../utils/MainApi';
 
 
-function App() {
+
+const App = () => {
+   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  // const [type, setType] = React.useState(null);
+  // const [email, setEmail] = React.useState("");
+
+  const history = useHistory();
+
+function checkToken(token) {
+  mainapi.checkToken(token)
+  .then((res) => {
+    setIsLoggedIn(true);
+  }).catch(console.error);
+}
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token)checkToken(token);
+ }, []);
+ 
+  function handleLogin(data) {
+    mainapi.login(data).then((res) => {
+      checkToken(res.token);
+      localStorage.setItem('token', res.token);
+    }).catch(console.error);
+  }
+  function handleRegister(data) {
+    mainapi.register(data).then(() => {
+      setTimeout(() => {
+        history.push("/sign-in")
+      }, 2000);
+    }).catch(console.error);
+  }
+
   return <div className="app">
     <Switch>
       <Route exact path="/">
@@ -30,12 +63,12 @@ function App() {
       </Route>
       <Route exact path="/signup">
         <main>
-          <Register/>
+          <Register onSubmit={handleRegister}/>
         </main>
       </Route>
       <Route exact path="/signin">
         <main>
-          <Login/>
+        <Login onSubmit={handleLogin}/>
         </main>
       </Route>
 
