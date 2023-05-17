@@ -32,10 +32,15 @@ function Login({onSubmit}) {
           autoComplete="off"
           placeholder='E-mail'
           required/>
-        <label value={password}
-          onChange={handlePasswordChange}
-          className="auth__input-label">Пароль</label>
-        <input type="password" className="auth__input" placeholder='Пароль' autoComplete="off" minLength="8" required/>
+        <label className="auth__input-label">Пароль</label>
+        <input onChange={handlePasswordChange}
+          value={password}
+          type="password"
+          className="auth__input"
+          placeholder='Пароль'
+          autoComplete="off"
+          minLength="8"
+          required/>
         <button type="submit" className="auth__submit-button">Войти</button>
       </form>
       <p className="auth__redirect">Ещё не зарегистрированы?

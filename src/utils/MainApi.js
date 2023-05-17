@@ -9,7 +9,7 @@ class MainApi {
       this._baseUrl
     }/signin`, {
       method: 'POST',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify(data)
     }).then(this._responseTransform)
   }
@@ -18,7 +18,7 @@ class MainApi {
       this._baseUrl
     }/signup`, {
       method: 'POST',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify(data)
     }).then(this._responseTransform)
   }

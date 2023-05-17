@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Switch, useHistory} from 'react-router-dom';
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main';
 import Header from '../Header/Header'
@@ -10,57 +10,56 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import mainapi from '../../utils/MainApi';
-
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 
 const App = () => {
-   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   // const [type, setType] = React.useState(null);
   // const [email, setEmail] = React.useState("");
 
   const history = useHistory();
 
-function checkToken(token) {
-  mainapi.checkToken(token)
-  .then((res) => {
-    setIsLoggedIn(true);
-  }).catch(console.error);
-}
-  React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token)checkToken(token);
- }, []);
- 
+  function checkToken(token) {
+   mainapi.checkToken(token)
+   .then((res) => {
+      setIsLoggedIn(true);
+   }).catch(console.error);
+   }
+   React.useEffect(() => {
+       const token = localStorage.getItem('token');
+       if (token)setIsLoggedIn(true);
+   }, []);
+
   function handleLogin(data) {
-    mainapi.login(data).then((res) => {
-      checkToken(res.token);
+    mainapi.login(data).then((res) => {  setIsLoggedIn(true);
       localStorage.setItem('token', res.token);
     }).catch(console.error);
   }
   function handleRegister(data) {
     mainapi.register(data).then(() => {
       setTimeout(() => {
-        history.push("/sign-in")
+        history.push("/signin")
       }, 2000);
     }).catch(console.error);
   }
 
   return <div className="app">
-    <Switch>
+   <Switch>
       <Route exact path="/">
         <Header isLoggedIn={false}></Header>
         <Main/>
         <Footer/>
       </Route>
-      <Route path="/movies">
+      <ProtectedRoute path="/movies" loggedIn={isLoggedIn}>
         <Movies/>
-      </Route>
-      <Route path="/saved-movies">
+      </ProtectedRoute>
+      <ProtectedRoute path="/saved-movies" loggedIn={isLoggedIn}>
         <SavedMovies/>
-      </Route>
-      <Route path="/profile">
+      </ProtectedRoute>
+      <ProtectedRoute path="/profile" loggedIn={isLoggedIn}>
         <Profile/>
-      </Route>
+      </ProtectedRoute>
       <Route exact path="/signup">
         <main>
           <Register onSubmit={handleRegister}/>
