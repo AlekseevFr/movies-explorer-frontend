@@ -7,17 +7,23 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Navigation from '../Navigation/Navigation';
 import Page from '../Page/Page'
+import moviesApi from '../../utils/MovieApi'
 
 
 function Movies() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [movies, setMovies] = useState(null);
+  
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+  function handleSearchSubmit(searchText) {
+    setIsLoading(true)
+    moviesApi.getMovies().then((res) => {
+      setMovies(res);
+      setIsLoading(false)
+      localStorage.setItem('searchText', searchText);
+    }).catch(console.error);
+  }
   return (
     <>
       <Page isOpen={isOpen}>
@@ -26,10 +32,11 @@ function Movies() {
             () => setIsOpen(!isOpen)
           }/>
         <main>
-          <SearchForm/>
+          <SearchForm handleSearchSubmit={handleSearchSubmit}/>
           <section className="movies">
             {
-            isLoading ? <Preloader/>: <MoviesCardList isSaved={false}/>
+            isLoading ? <Preloader/>: <MoviesCardList movies={movies}
+              isSaved={false}/>
           } </section>
         </main>
         <Footer/>

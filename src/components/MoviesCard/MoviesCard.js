@@ -9,9 +9,11 @@ const MoviesCard = ({
   duration,
   poster,
   favorite,
-  isSaved
+  isSaved,
+  link
 }) => (
-  <div className="moviescard">
+  <a href={link
+  } className="moviescard">
     <div className="moviescard__info">
       <h3 className="moviescard__title">
         {title}</h3>
@@ -38,7 +40,7 @@ const MoviesCard = ({
     <img className="moviescard__poster"
       src={poster}
       alt="Изображение постера"/>
-  </div>
+  </a>
 );
 
 export default MoviesCard;

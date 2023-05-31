@@ -13,6 +13,13 @@ class MainApi {
       body: JSON.stringify(data)
     }).then(this._responseTransform)
   }
+  getUserInfo() {
+    return fetch(`${
+      this.baseUrl
+    }/users/me`, {headers: {
+      ...this.headers, authorization: `Bearer ${localStorage.getItem('token')}`
+      }}).then(this._responseTransform)
+  }
   register(data) {
     return fetch(`${
       this._baseUrl
