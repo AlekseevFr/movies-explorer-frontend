@@ -19,8 +19,8 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
     const token = localStorage.getItem('token');
-
     return !! token;
+    
   });
   const history = useHistory();
 
@@ -60,7 +60,7 @@ const App = () => {
       }, 2000);
     }).catch(console.error);
   }
-
+ 
   return <div className="app">
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
@@ -79,6 +79,10 @@ const App = () => {
           onLogout={handleLogout}
           loggedIn={isLoggedIn}
           onEditProfile={handleEdit}
+          defaultValue={{
+            name: currentUser?.name || '',
+            email: currentUser?.email || '',
+          }}
           component={Profile}/>
         <Route exact path="/signup">
           <main>

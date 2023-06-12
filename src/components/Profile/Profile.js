@@ -1,12 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Page from '../Page/Page'
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function Profile({onLogout, onEditProfile}) {
+function Profile({onLogout, onEditProfile, defaultValue}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputs, setInputs] = useState({name: '', email: ''})
+  const currentUser = useContext(CurrentUserContext);
+  const [inputs, setInputs] = useState({
+    name: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    if (currentUser) {
+      setInputs({
+        name: currentUser?.name || '',
+        email: currentUser?.email || '',
+      })
+    }
+  }, [currentUser]);
 
   const clickSubmitButton = (evt) => {
     evt.preventDefault();
@@ -18,6 +32,7 @@ function Profile({onLogout, onEditProfile}) {
       [evt.target.name]: evt.target.value
     })
   }
+console.log(currentUser);
   return (
     <>
       <Page isOpen={isOpen}>
@@ -28,8 +43,7 @@ function Profile({onLogout, onEditProfile}) {
         <main>
           <form className="profile"
             onSubmit={clickSubmitButton}>
-            <h1 className="profile__hello">
-              Привет, Алексей!</h1>
+            <h1 className="profile__hello">Привет,{currentUser?.name}!</h1>
             <div className='profile__input-box'>
               <label className="profile__input-label">Имя</label>
               <input className="profile__input"
@@ -38,7 +52,7 @@ function Profile({onLogout, onEditProfile}) {
                 type="text"
                 value={inputs.name}
                 minLength="2"
-                required/>
+              />
             </div>
             <div className="profile__line"></div>
             <div className='profile__input-box'>
@@ -49,7 +63,7 @@ function Profile({onLogout, onEditProfile}) {
                 name='email'
                 value={inputs.email}
                 autoComplete="off"
-                required/>
+              />
             </div>
             <div className="profile__downbar">
               <button className="profile__edit-button" type="submit">Редактировать</button>

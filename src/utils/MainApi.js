@@ -15,10 +15,10 @@ class MainApi {
   }
   getUserInfo() {
     return fetch(`${
-      this.baseUrl
+      this._baseUrl
     }/users/me`, {
       headers: {
-        ...this.headers,
+        ...this._headers,
         authorization: `Bearer ${
           localStorage.getItem('token')
         }`
@@ -27,19 +27,17 @@ class MainApi {
   }
   updateUserInfo(name, email) {
     return fetch(`${
-      this.baseUrl
+      this._baseUrl
     }/users/me`, {
       method: 'PATCH',
 
       headers: {
-        ...this.headers,
+        ...this._headers,
         authorization: `Bearer ${
           localStorage.getItem('token')
         }`
       },
-      data: JSON.stringify(
-        {name, email}
-      )
+      body: JSON.stringify({ name, email })
     }).then(this._responseTransform)
   }
 
