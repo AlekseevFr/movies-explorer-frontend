@@ -2,20 +2,29 @@ import React, {useState} from 'react';
 import './SearchForm.css';
 
 function SearchForm({handleSearchSubmit}) {
-  const [searchText, setSearchText] = useState(null);
-
+  const [searchText, setSearchText] = useState(() => {
+    const searchText = localStorage.getItem('searchText');
+    return searchText? searchText : "";
+  });
+  const [toggle, setToggle] = useState(() => {
+    const toggle = localStorage.getItem('toggle');
+    return toggle? JSON.parse(toggle) : false;
+  });
   function handleTextlChange(e) {
     setSearchText(e.target.value);
   }
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchText) {
-      handleSearchSubmit(searchText);
+      handleSearchSubmit(searchText, toggle);
     } else {
       console.error();
     }
   }
-  
+  const handleСhangeToggle = () => {
+    setToggle(!toggle)
+  }
+  console.log(toggle);
   return (
     <form className='searchform'
       onSubmit={handleSubmit}>
@@ -30,7 +39,10 @@ function SearchForm({handleSearchSubmit}) {
         <button className='searchform__submit'>Найти</button>
       </div>
       <div className='searchform__switch'>
-        <input className="searchform__checkbox" type="checkbox"/>
+        <input onChange={handleСhangeToggle}
+          checked={toggle}
+          className='searchform__checkbox'
+          type="checkbox"/>
         <label className='searchform__label'>Короткометражки</label>
       </div>
       <div className='searchform__line'></div>

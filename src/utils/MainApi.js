@@ -16,10 +16,33 @@ class MainApi {
   getUserInfo() {
     return fetch(`${
       this.baseUrl
-    }/users/me`, {headers: {
-      ...this.headers, authorization: `Bearer ${localStorage.getItem('token')}`
-      }}).then(this._responseTransform)
+    }/users/me`, {
+      headers: {
+        ...this.headers,
+        authorization: `Bearer ${
+          localStorage.getItem('token')
+        }`
+      }
+    }).then(this._responseTransform)
   }
+  updateUserInfo(name, email) {
+    return fetch(`${
+      this.baseUrl
+    }/users/me`, {
+      method: 'PATCH',
+
+      headers: {
+        ...this.headers,
+        authorization: `Bearer ${
+          localStorage.getItem('token')
+        }`
+      },
+      data: JSON.stringify(
+        {name, email}
+      )
+    }).then(this._responseTransform)
+  }
+
   register(data) {
     return fetch(`${
       this._baseUrl
@@ -29,6 +52,47 @@ class MainApi {
       body: JSON.stringify(data)
     }).then(this._responseTransform)
   }
+  getSavedMovies(data) {
+    return fetch(`${
+      this._baseUrl
+    }/movies`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${
+          localStorage.getItem('token')
+        }`
+      }
+    }).then(this._responseTransform)
+  }
+  saveMovie(data) {
+    return fetch(`${
+      this._baseUrl
+    }/movies`, {
+      method: 'POST',
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${
+          localStorage.getItem('token')
+        }`
+      },
+      body: JSON.stringify(data)
+    }).then(this._responseTransform)
+  }
+  deleteMovie(id) {
+    return fetch(`${
+      this._baseUrl
+    }/movies/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        authorization: `Bearer ${
+          localStorage.getItem('token')
+        }`
+      }
+    }).then(this._responseTransform)
+  }
+
   _responseTransform(res) {
     if (res.ok) {
       return res.json();

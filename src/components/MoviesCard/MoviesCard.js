@@ -3,44 +3,66 @@ import './MoviesCard.css';
 import {ReactComponent as Favorite} from '../../images/Favorite_icon.svg'
 import Delete from '../../images/Delete.svg';
 
-
 const MoviesCard = ({
-  title,
-  duration,
-  poster,
-  favorite,
+  movie,
   isSaved,
-  link
-}) => (
-  <a href={link
-  } className="moviescard">
-    <div className="moviescard__info">
-      <h3 className="moviescard__title">
-        {title}</h3>
-      <p className="moviescard__duration">
-        {duration}</p>
-    </div>
-    {
-    isSaved ? (
-      <button className="moviescard__delete-favorite" type="button">
-        <img className="moviescard__delete-logo"
-          src={Delete}
-          alt="Крестик"/>
-      </button>
-    ) : (
-      <button className={
-        `moviescard__favorite ${
-          favorite ? 'moviescard__favorite_active' : ''
-        }`
-      }>
-        <Favorite className={`moviescard__favorite-logo`}/>
-      </button>
-    )
+  handleMovieClick
+}) => {
+  const { id, duration, trailerLink, nameRU, nameEN, image, country, director, year, description, favorite, thumbnail } = movie;
+
+  const handleFavoriteClick = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    handleMovieClick({
+      movieId: id,
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      nameRU,
+      nameEN,
+      thumbnail,
+    });
   }
-    <img className="moviescard__poster"
-      src={poster}
-      alt="Изображение постера"/>
-  </a>
-);
+
+  return (
+    <div className="moviescard" onClick={(e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open(trailerLink, '_blank');
+    }}>
+      <div className="moviescard__info">
+        <h3 className="moviescard__title">
+          {nameRU}</h3>
+        <p className="moviescard__duration">
+          {duration}</p>
+      </div>
+      {
+      isSaved ? (
+        <button className="moviescard__delete-favorite" type="button" onClick={handleFavoriteClick}>
+          <img className="moviescard__delete-logo"
+            src={Delete}
+            alt="Крестик" />
+        </button>
+      ) : (
+        <button className={
+          `moviescard__favorite ${
+            favorite ? 'moviescard__favorite_active' : ''
+          }`
+        } onClick={handleFavoriteClick}>
+          <Favorite className={`moviescard__favorite-logo`}/>
+        </button>
+      )
+    }
+      <img className="moviescard__poster"
+        src={image}
+        alt="Изображение постера"/>
+    </div>
+  )
+};
 
 export default MoviesCard;

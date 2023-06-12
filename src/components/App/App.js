@@ -22,16 +22,8 @@ const App = () => {
 
     return !! token;
   });
-  // const [type, setType] = React.useState(null);
-  // const [email, setEmail] = React.useState("");
-
   const history = useHistory();
 
-  // function checkToken(token) {
-  // mainapi.checkToken(token).then((res) => {
-  //     setIsLoggedIn(true);
-  // }).catch(console.error);
-  // }
   React.useEffect(() => {
     if (isLoggedIn) {
         mainapi.getUserInfo().then((res) => setCurrentUser(res.data)).catch(console.error);
@@ -47,6 +39,20 @@ const App = () => {
       history.push("/movies")
     }).catch(console.error);
   }
+  const handleEdit = (name, email) => {
+    mainapi.updateUserInfo(name, email)
+      .then((res) => {
+        setIsLoggedIn(true);
+        setCurrentUser(res.data);
+      }).catch(console.error);
+  };
+  function handleLogout(res) {
+      setIsLoggedIn(false);
+      localStorage.removeItem('token', res.token);
+      setCurrentUser('');
+      history.push("/")
+  }
+  
   function handleRegister(data) {
     mainapi.register(data).then(() => {
       setTimeout(() => {
@@ -70,7 +76,9 @@ const App = () => {
           loggedIn={isLoggedIn}
           component={SavedMovies}/>
         <ProtectedRoute path="/profile"
+          onLogout={handleLogout}
           loggedIn={isLoggedIn}
+          onEditProfile={handleEdit}
           component={Profile}/>
         <Route exact path="/signup">
           <main>

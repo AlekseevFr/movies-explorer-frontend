@@ -25,9 +25,9 @@ function Header({ isLoggedIn, handleMenuClick }) {
       ) : (
         <div className='header__auth'>
         <a href='/signup' className='header__reg'>Регистрация</a>
-        <botton className='header__signin'>
+        <button className='header__signin'>
           <a href='/signin' className='header__enter'>Войти</a>
-        </botton>
+        </button>
       </div>
       )}
     </header>
