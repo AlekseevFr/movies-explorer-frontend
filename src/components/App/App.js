@@ -26,10 +26,12 @@ const App = () => {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-        mainapi.getUserInfo().then((res) => setCurrentUser(res.data)).catch(console.error);
+        mainapi.getUserInfo().then((res) => {
+          setCurrentUser(res)
+        }).catch(console.error);
     }
-      }, [isLoggedIn])
-
+  }, [isLoggedIn])
+  
   function handleLogin(data) {
     mainapi.login(data).then((res) => {
       setIsLoggedIn(true);
@@ -43,7 +45,7 @@ const App = () => {
     mainapi.updateUserInfo(name, email)
       .then((res) => {
         setIsLoggedIn(true);
-        setCurrentUser(res.data);
+        setCurrentUser(res);
       }).catch(console.error);
   };
   function handleLogout(res) {
@@ -54,12 +56,14 @@ const App = () => {
   }
   
   function handleRegister(data) {
-    mainapi.register(data).then(() => {
+    return mainapi.register(data).then(() => {
       setTimeout(() => {
         history.push("/signin")
       }, 2000);
-    }).catch(console.error);
+      return;
+    }).catch((error) => error);
   }
+
  
   return <div className="app">
     <CurrentUserContext.Provider value={currentUser}>

@@ -97,7 +97,7 @@ function Movies() {
           <SearchForm handleSearchSubmit={handleSearchSubmit}/>
           <section className="movies">
             {
-            isLoading ? <Preloader/>: error ? <span>{error}</span> : <MoviesCardList handleMovieClick={handleMovieClick} movies={movies}
+            isLoading ? <Preloader/>: error ? <span className='movies__error'>{error}</span> : <MoviesCardList handleMovieClick={handleMovieClick} movies={movies}
               isSaved={false}/>
           } </section>
         </main>

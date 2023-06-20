@@ -50,7 +50,7 @@ function SavedMovies() {
         <main>
           <SearchForm handleSearchSubmit={handleSearchSubmit} />
           <section className="saved-movies">
-            {isLoading ? <Preloader/> : error ? <span>{error}</span> : <MoviesCardList movies={movies} handleMovieClick={handleMovieDelete} isSaved />}
+            {isLoading ? <Preloader/> : error ? <span className="saved-movies__error">{error}</span> : <MoviesCardList movies={movies} handleMovieClick={handleMovieDelete} isSaved />}
           </section>
         </main>
         <Footer/>

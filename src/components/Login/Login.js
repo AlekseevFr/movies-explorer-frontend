@@ -3,20 +3,18 @@ import {useState} from 'react';
 import './Login.css';
 import {Link} from 'react-router-dom';
 import Logo from '../Logo/Logo';
+import useForm from '../../hooks/Validators';
 
 function Login({onSubmit}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
-  function handleSubmit(e) {
+  const [error, setError] = useState(false);
+  const {inputs, errors, disabled, onChange} = useForm();
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    onSubmit({email, password});
+    const response = await onSubmit(inputs);
+    setError(response);
+    console.log(response);
   }
   return (
     <section className="auth">
@@ -25,23 +23,37 @@ function Login({onSubmit}) {
       <form className="auth__form"
         onSubmit={handleSubmit}>
         <label className="auth__input-label">E-mail</label>
-        <input value={email}
-          onChange={handleEmailChange}
+        <input value={inputs.email || ""} 
+          onChange={onChange}
           type="email"
+          name="email"
           className="auth__input"
           autoComplete="off"
-          placeholder='E-mail'
-          required/>
+          placeholder='E-mail'/>
+          {
+            errors.email && <span className='login__error'>
+              {
+              errors.email
+            }</span>
+          }
         <label className="auth__input-label">Пароль</label>
-        <input onChange={handlePasswordChange}
-          value={password}
+        <input onChange={onChange}
+          value={inputs.password || ""} 
           type="password"
+          name="password"
           className="auth__input"
           placeholder='Пароль'
-          autoComplete="off"
-          minLength="8"
-          required/>
-        <button type="submit" className="auth__submit-button">Войти</button>
+          autoComplete="off"/>
+          {
+            errors.password && <span className='login__error'>
+              {
+              errors.password
+            }</span>
+          }
+           {
+            error && <span className='login__error'>Что-то пошло не так...{}</span>
+          }
+        <button disabled={disabled} type="submit" className="auth__submit-button">Войти</button>
       </form>
       <p className="auth__redirect">Ещё не зарегистрированы?
         <Link className="auth__sign" to="/signup">
