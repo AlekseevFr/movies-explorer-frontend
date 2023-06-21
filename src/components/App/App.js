@@ -33,13 +33,13 @@ const App = () => {
   }, [isLoggedIn])
   
   function handleLogin(data) {
-    mainapi.login(data).then((res) => {
+    return mainapi.login(data).then((res) => {
       setIsLoggedIn(true);
       localStorage.setItem('token', res.token);
       setCurrentUser(res.data);
-      console.log(res);
       history.push("/movies")
-    }).catch(console.error);
+      return;
+    }).catch((error) => error);
   }
   const handleEdit = (name, email) => {
     mainapi.updateUserInfo(name, email)
