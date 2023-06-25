@@ -102,7 +102,7 @@ class MainApi {
 }
 
 const mainapi = new MainApi({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'http://api.frmovies.nomoredomains.monster',
   headers: {
     'Content-Type': 'application/json'
   }

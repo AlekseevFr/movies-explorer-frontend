@@ -4,4 +4,6 @@
 
 Ссылка на PullRequest https://github.com/AlekseevFr/movies-explorer-frontend/pull/2
 
+Ссылка на проект на сервере:frmovies.nomoreparties.sbs
+
 Последняя часть дипломного проекта, в котрой мы создаём функционал при помощи React. 
