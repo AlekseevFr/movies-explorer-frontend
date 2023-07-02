@@ -13,7 +13,8 @@ import { shortMovies } from '../../helpers';
 
 function SavedMovies() {
   const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,7 +22,9 @@ function SavedMovies() {
     setIsLoading(true);
     mainApi.getSavedMovies().then((resp) => {
       setIsLoading(false);
-      setMovies(resp.data.map((movie) => ({ ...movie, id: movie._id })));
+      const movies = resp.data.map((movie) => ({ ...movie, id: movie._id }));
+      setAllMovies(movies);
+      setFilteredMovies(movies);
     }).catch(() => {
       setIsLoading(false);
       setError("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
@@ -29,17 +32,17 @@ function SavedMovies() {
   }, []);
 
   const handleSearchSubmit = (searchText, toggle) => {
-    const filteredMovies = shortMovies(movies, toggle, searchText);
+    const filteredMovies = shortMovies(allMovies, toggle, searchText);
     if (!filteredMovies.length) {
       setError("Ничего не найдено")
     }
-    setMovies(filteredMovies);
+    setFilteredMovies(filteredMovies);
   }
 
   const handleMovieDelete = (movie) => {
     mainApi.deleteMovie(movie.movieId).then(() => {
-      const newMovies = movies.filter((item) => item.id !== movie.movieId);
-      setMovies(newMovies)
+      setAllMovies(allMovies.filter((item) => item.id !== movie.movieId));
+      setFilteredMovies(filteredMovies.filter((item) => item.id !== movie.movieId));
     }).catch(console.error)
   }
 
@@ -48,9 +51,9 @@ function SavedMovies() {
      <Page isOpen={isOpen}>
         <Header isLoggedIn={true} handleMenuClick={() => setIsOpen(!isOpen)} />
         <main>
-          <SearchForm handleSearchSubmit={handleSearchSubmit} />
+          <SearchForm handleSearchSubmit={handleSearchSubmit} handleToggle={handleSearchSubmit} isSaved />
           <section className="saved-movies">
-            {isLoading ? <Preloader/> : error ? <span className="saved-movies__error">{error}</span> : <MoviesCardList movies={movies} handleMovieClick={handleMovieDelete} isSaved />}
+            {isLoading ? <Preloader/> : error ? <span className="saved-movies__error">{error}</span> : <MoviesCardList movies={filteredMovies} handleMovieClick={handleMovieDelete} isSaved />}
           </section>
         </main>
         <Footer/>

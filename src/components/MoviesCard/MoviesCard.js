@@ -3,12 +3,21 @@ import './MoviesCard.css';
 import {ReactComponent as Favorite} from '../../images/Favorite_icon.svg'
 import Delete from '../../images/Delete.svg';
 
-const MoviesCard = ({
-  movie,
-  isSaved,
-  handleMovieClick
-}) => {
-  const { id, duration, trailerLink, nameRU, nameEN, image, country, director, year, description, favorite, thumbnail } = movie;
+const MoviesCard = ({movie, isSaved, handleMovieClick}) => {
+  const {
+    id,
+    duration,
+    trailerLink,
+    nameRU,
+    nameEN,
+    image,
+    country,
+    director,
+    year,
+    description,
+    favorite,
+    thumbnail
+  } = movie;
 
   const handleFavoriteClick = (event) => {
     event.preventDefault();
@@ -25,35 +34,44 @@ const MoviesCard = ({
       trailerLink,
       nameRU,
       nameEN,
-      thumbnail,
+      thumbnail
     });
   }
 
   return (
-    <div className="moviescard" onClick={(e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      window.open(trailerLink, '_blank');
-    }}>
+    <div className="moviescard"
+      onClick={
+        (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(trailerLink, '_blank');
+        }
+    }>
       <div className="moviescard__info">
         <h3 className="moviescard__title">
           {nameRU}</h3>
-        <p className="moviescard__duration">
-          {duration}</p>
+
+        <span className="moviescard__duration">{
+          Math.floor(duration / 60)
+        }:{
+          duration % 60
+        }</span>
       </div>
       {
       isSaved ? (
-        <button className="moviescard__delete-favorite" type="button" onClick={handleFavoriteClick}>
+        <button className="moviescard__delete-favorite" type="button"
+          onClick={handleFavoriteClick}>
           <img className="moviescard__delete-logo"
             src={Delete}
-            alt="Крестик" />
+            alt="Крестик"/>
         </button>
       ) : (
         <button className={
-          `moviescard__favorite ${
-            favorite ? 'moviescard__favorite_active' : ''
-          }`
-        } onClick={handleFavoriteClick}>
+            `moviescard__favorite ${
+              favorite ? 'moviescard__favorite_active' : ''
+            }`
+          }
+          onClick={handleFavoriteClick}>
           <Favorite className={`moviescard__favorite-logo`}/>
         </button>
       )

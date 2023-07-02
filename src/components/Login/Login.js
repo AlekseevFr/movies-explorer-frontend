@@ -17,6 +17,7 @@ function Login({onSubmit}) {
     console.log(response);
   }
   return (
+    <main>
     <section className="auth">
       <Logo/>
       <h2 className="auth__title">Рады видеть!</h2>
@@ -59,8 +60,8 @@ function Login({onSubmit}) {
         <Link className="auth__sign" to="/signup">
           Регистрация</Link>
       </p>
-
     </section>
+    </main>
   );
 }
 

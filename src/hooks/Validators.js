@@ -32,6 +32,7 @@ const useForm = ({ defaultInputs } = {}) => {
       if (!value) {
         errorText = "Пустое поле"
       }
+      
       setErrors({ ...errors, [name]: errorText })
   }
 

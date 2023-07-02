@@ -12,26 +12,30 @@ import Login from '../Login/Login';
 import mainapi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import NotFound from "../NotFound/NotFound.js"
 import {useState} from 'react';
 
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
-    const token = localStorage.getItem('token');
-    return !! token;
-    
-  });
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
+  //   const token = localStorage.getItem('token');
+  //   return !!token;
+  // });
   const history = useHistory();
 
   React.useEffect(() => {
-    if (isLoggedIn) {
-        mainapi.getUserInfo().then((res) => {
-          setCurrentUser(res)
-        }).catch(console.error);
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      mainapi.getUserInfo().then((res) => {
+        setCurrentUser(res);
+        setIsLoggedIn(true);
+      }).catch(() => history.push('/signin'));
     }
-  }, [isLoggedIn])
-  
+  }, [history])
+
   function handleLogin(data) {
     return mainapi.login(data).then((res) => {
       setIsLoggedIn(true);
@@ -42,34 +46,32 @@ const App = () => {
     }).catch((error) => error);
   }
   const handleEdit = (name, email) => {
-    mainapi.updateUserInfo(name, email)
-      .then((res) => {
-        setIsLoggedIn(true);
-        setCurrentUser(res);
-      }).catch(console.error);
+    return mainapi.updateUserInfo(name, email).then((res) => {
+      setIsLoggedIn(true);
+      setCurrentUser(res);
+    }).catch(console.error);
   };
   function handleLogout(res) {
-      setIsLoggedIn(false);
-      localStorage.removeItem('token', res.token);
-      setCurrentUser('');
-      history.push("/")
+    setIsLoggedIn(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('searchText')
+    localStorage.removeItem('filteredMovies')
+    localStorage.removeItem('toggle')
+    setCurrentUser('');
+    history.push("/")
   }
-  
+
   function handleRegister(data) {
     return mainapi.register(data).then(() => {
-      setTimeout(() => {
-        history.push("/signin")
-      }, 2000);
-      return;
+      handleLogin({email: data.email, password: data.password})
     }).catch((error) => error);
   }
 
- 
   return <div className="app">
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
         <Route exact path="/">
-          <Header isLoggedIn={false}></Header>
+          <Header isLoggedIn={isLoggedIn}></Header>
           <Main/>
           <Footer/>
         </Route>
@@ -83,21 +85,27 @@ const App = () => {
           onLogout={handleLogout}
           loggedIn={isLoggedIn}
           onEditProfile={handleEdit}
-          defaultValue={{
-            name: currentUser?.name || '',
-            email: currentUser?.email || '',
-          }}
+          defaultValue={
+            {
+              name: currentUser?.name || '',
+              email: currentUser?.email || ''
+            }
+          }
           component={Profile}/>
-        <Route exact path="/signup">
-          <main>
-            <Register onSubmit={handleRegister}/>
-          </main>
-        </Route>
-        <Route exact path="/signin">
-          <main>
-            <Login onSubmit={handleLogin}/>
-          </main>
-        </Route>
+
+        <ProtectedRoute path="/signup"
+          loggedIn={!isLoggedIn}
+          onSubmit={handleRegister}
+          component={Register}/>
+
+        <ProtectedRoute path="/signin"
+          loggedIn={!isLoggedIn}
+          onSubmit={handleLogin}
+          component={Login}/>
+          <Route exact path="*">
+            <NotFound/>
+          </Route>
+
       </Switch>
     </CurrentUserContext.Provider>
   </div>

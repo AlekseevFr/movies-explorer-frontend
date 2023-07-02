@@ -4,13 +4,13 @@ import Header from '../Header/Header';
 import Navigation from '../Navigation/Navigation';
 import Page from '../Page/Page'
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import PATTERN from '../../utils/Constants.js';
 import useForm from '../../hooks/Validators';
 
 
 
 function Profile({onLogout, onEditProfile}) {
   const [isOpen, setIsOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
   const currentUser = useContext(CurrentUserContext);
   
   const form = useMemo(() => ({
@@ -21,10 +21,19 @@ function Profile({onLogout, onEditProfile}) {
  }), [currentUser]);
  
    const { inputs, errors, disabled, onChange } = useForm(form);
+   let isDisabled = disabled 
+   if (inputs.name === currentUser?.name && inputs.email === currentUser?.email) {
+    isDisabled = true
+}
 
-  const clickSubmitButton = (evt) => {
-    evt.preventDefault();
-    onEditProfile(inputs.name, inputs.email);
+   const clickSubmitButton = (evt) => { evt.preventDefault();
+    setSuccess(false)
+    onEditProfile(inputs.name, inputs.email).then(() => setSuccess(true))
+   }
+
+   const handleChange = (e) => {
+    setSuccess (false);
+    onChange(e);
   }
 
   return (
@@ -43,14 +52,13 @@ function Profile({onLogout, onEditProfile}) {
             <div className='profile__input-box'>
               <label className="profile__input-label">Имя</label>
               <input className="profile__input"
-                onChange={onChange}
+                onChange={handleChange}
                 name="name"
-                pattern={PATTERN}
                 type="text"
                 value={
-                  inputs.name
+                  inputs.name || ''
                 }
-                minLength="2"/>
+                />
             </div>
             {
             errors.name && <span className='profile__error'>
@@ -62,11 +70,11 @@ function Profile({onLogout, onEditProfile}) {
             <div className='profile__input-box'>
               <label className="profile__input-label">E-mail</label>
               <input className="profile__input"
-                onChange={onChange}
+                onChange={handleChange}
                 type="text"
                 name='email'
                 value={
-                  inputs.email
+                  inputs.email || ''
                 }
                 autoComplete="off"/>
             </div>
@@ -76,8 +84,11 @@ function Profile({onLogout, onEditProfile}) {
               errors.email
             }</span>
           }
+          {
+            success && <span className='profile__success'>Информация обновлена</span>
+          }
             <div className="profile__downbar">
-              <button disabled={disabled}
+              <button disabled={isDisabled}
                 className="profile__edit-button"
                 type="submit">Редактировать</button>
               <button onClick={onLogout}

@@ -134,3 +134,10 @@
   margin-top: 10px;
   margin-left: auto;
 }
+.profile__success {
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #3DDC84;
+}

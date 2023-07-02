@@ -13,22 +13,25 @@ import { shortMovies } from '../../helpers';
 
 const moviesURL = 'https://api.nomoreparties.co';
 
+function getMovies() {
+  const filteredMovies = localStorage.getItem('filteredMovies');
+  return filteredMovies? JSON.parse(filteredMovies) : null;
+}
+
 function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
-  const [movies, setMovies] = useState(() => {
-    const movies = localStorage.getItem('filteredMovies');
-    return movies? JSON.parse(movies) : null
-  });
+  const [allMovies, setAllMovies] = useState(getMovies);
+  const [filteredMovies, setFilteredMovies] = useState(getMovies);
 
   useEffect(() => {
     mainApi.getSavedMovies().then((resp) => {
-      setMovies((prevMovies) => {
+      setFilteredMovies((prevMovies) => {
         const moviesWithFavorites = prevMovies?.map((movie) => {
           const favoriteMovie = resp.data.find((item) => item.movieId === movie.id);
           if (favoriteMovie) {
-            return { ...movie, favorite: true, id: favoriteMovie._id }
+            return { ...movie, favorite: true, movieId: favoriteMovie._id }
           }
   
           return movie;
@@ -39,34 +42,47 @@ function Movies() {
     }).catch(console.error);
   }, []);
 
+  function saveFilteredMovies(movies, toggle, searchText) {
+    const filteredMovies = shortMovies(movies, toggle, searchText);
+    if (!filteredMovies.length) {
+      setError("Ничего не найдено")
+    }
+    setFilteredMovies(filteredMovies);
+    localStorage.setItem('searchText', searchText);
+    localStorage.setItem('toggle', toggle);
+    localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
+  }
+
+  function handleToggle(searchText, toggle) {
+    saveFilteredMovies(allMovies, toggle, searchText);
+  }
+
   function handleSearchSubmit(searchText, toggle) {
-    setIsLoading(true)
-    moviesApi.getMovies().then((res) => {
-      const movies = res.map((movie) => ({
-        ...movie,
-        image: `${moviesURL}${movie.image.url}`,
-        thumbnail: `${moviesURL}${movie.image.formats.thumbnail.url}`,
-      }))
-      const filteredMovies = shortMovies(movies, toggle, searchText);
-      if (!filteredMovies.length) {
-        setError("Ничего не найдено")
-      }
-      setMovies(filteredMovies);
-      setIsLoading(false)
-      localStorage.setItem('searchText', searchText);
-      localStorage.setItem('toggle', toggle);
-      localStorage.setItem('filteredMovies', JSON.stringify(filteredMovies));
-    }).catch(() => {
-      setError("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
-      setIsLoading(false)
-    })
+    if (allMovies) {
+      saveFilteredMovies(allMovies, toggle, searchText);
+    } else {
+      setIsLoading(true);
+      moviesApi.getMovies().then((res) => {
+        const movies = res.map((movie) => ({
+          ...movie,
+          image: `${moviesURL}${movie.image.url}`,
+          thumbnail: `${moviesURL}${movie.image.formats.thumbnail.url}`,
+        }));
+        setAllMovies(movies);
+        saveFilteredMovies(movies, toggle, searchText);
+        setIsLoading(false);
+      }).catch(() => {
+        setError("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
+        setIsLoading(false)
+      })
+    }
   }
   
   function handleMovieClick(movie) {
-    const currentMovie = movies.find((item) => item.id === movie.movieId);
+    const currentMovie = filteredMovies.find((item) => item.id === movie.movieId);
 
     if (currentMovie.favorite) {
-      deleteMovie(movie.movieId)
+      deleteMovie(currentMovie.movieId)
     } else {
       addMovie(movie);
     }
@@ -74,15 +90,14 @@ function Movies() {
 
   function deleteMovie(movieId) {
     mainApi.deleteMovie(movieId).then(() => {
-      const newMovies = movies.map((item) => item.id === movieId ? { ...item, favorite: false } : item);
-      setMovies(newMovies)
+      setFilteredMovies(filteredMovies.map((item) => item.movieId === movieId ? { ...item, favorite: false } : item));
     }).catch(console.error)
   }
 
   function addMovie(movie) {
     mainApi.saveMovie(movie).then((resp) => {
-      const newMovies = movies.map((item) => item.id === movie.movieId ? { ...item, id: resp._id, favorite: true } : item);
-      setMovies(newMovies)
+      const newMovies = filteredMovies.map((item) => item.id === movie.movieId ? { ...item, movieId: resp._id, favorite: true } : item);
+      setFilteredMovies(newMovies);
     }).catch(console.error)
   }
 
@@ -94,10 +109,10 @@ function Movies() {
             () => setIsOpen(!isOpen)
           }/>
         <main>
-          <SearchForm handleSearchSubmit={handleSearchSubmit}/>
+          <SearchForm handleSearchSubmit={handleSearchSubmit} handleToggle={handleToggle} />
           <section className="movies">
             {
-            isLoading ? <Preloader/>: error ? <span className='movies__error'>{error}</span> : <MoviesCardList handleMovieClick={handleMovieClick} movies={movies}
+            isLoading ? <Preloader/>: error ? <span className='movies__error'>{error}</span> : <MoviesCardList handleMovieClick={handleMovieClick} movies={filteredMovies}
               isSaved={false}/>
           } </section>
         </main>

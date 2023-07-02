@@ -7,13 +7,16 @@ import useForm from '../../hooks/Validators';
 
  function Register({onSubmit}){
   const [error, setError] = useState(false);
-  const {inputs, errors, disabled, onChange} = useForm();
+  const {inputs, errors, onChange} = useForm();
+  const disabled = Object.keys(errors).length === 3 ? Object.values(errors).some(Boolean) : true;
   async function handleSubmit(e) {
     e.preventDefault();
     const response = await onSubmit(inputs);
     setError(response);
   }
+  
   return (
+    <main>
     <section className="auth">
       <Logo/>
       <h2 className="auth__title">Добро пожаловать!</h2>
@@ -69,6 +72,7 @@ import useForm from '../../hooks/Validators';
       </p>
 
     </section>
+    </main>
   );
 }
 
