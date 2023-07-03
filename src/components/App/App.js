@@ -1,4 +1,3 @@
-import React from 'react';
 import {Route, Switch, useHistory} from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main';
@@ -13,45 +12,46 @@ import mainapi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import NotFound from "../NotFound/NotFound.js"
-import {useState} from 'react';
+import React, { useState, useCallback } from 'react';
 
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
-  //   const token = localStorage.getItem('token');
-  //   return !!token;
-  // });
   const history = useHistory();
+
+  const getUserInfo = useCallback(async () => {
+    return mainapi.getUserInfo().then((res) => {
+      setCurrentUser(res);
+      setIsLoggedIn(true);
+    }).catch(() => history.push('/signin'));
+  }, [history]);
 
   React.useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      mainapi.getUserInfo().then((res) => {
-        setCurrentUser(res);
-        setIsLoggedIn(true);
-      }).catch(() => history.push('/signin'));
+      getUserInfo()
     }
-  }, [history])
+  }, [getUserInfo, history])
 
   function handleLogin(data) {
     return mainapi.login(data).then((res) => {
-      setIsLoggedIn(true);
       localStorage.setItem('token', res.token);
-      setCurrentUser(res.data);
-      history.push("/movies")
+      getUserInfo();
+      history.push("/movies");
       return;
     }).catch((error) => error);
   }
+
   const handleEdit = (name, email) => {
     return mainapi.updateUserInfo(name, email).then((res) => {
       setIsLoggedIn(true);
       setCurrentUser(res);
     }).catch(console.error);
   };
-  function handleLogout(res) {
+
+  function handleLogout() {
     setIsLoggedIn(false);
     localStorage.removeItem('token');
     localStorage.removeItem('searchText')
@@ -85,12 +85,6 @@ const App = () => {
           onLogout={handleLogout}
           loggedIn={isLoggedIn}
           onEditProfile={handleEdit}
-          defaultValue={
-            {
-              name: currentUser?.name || '',
-              email: currentUser?.email || ''
-            }
-          }
           component={Profile}/>
 
         <ProtectedRoute path="/signup"

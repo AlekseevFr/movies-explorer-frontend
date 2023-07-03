@@ -23,7 +23,7 @@ function Profile({onLogout, onEditProfile}) {
    const { inputs, errors, disabled, onChange } = useForm(form);
    let isDisabled = disabled 
    if (inputs.name === currentUser?.name && inputs.email === currentUser?.email) {
-    isDisabled = true
+    isDisabled = true;
 }
 
    const clickSubmitButton = (evt) => { evt.preventDefault();
