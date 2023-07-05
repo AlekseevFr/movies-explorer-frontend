@@ -22,7 +22,7 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(null);
-  const [allMovies, setAllMovies] = useState(getMovies);
+  const [allMovies, setAllMovies] = useState(null);
   const [filteredMovies, setFilteredMovies] = useState(getMovies);
 
   useEffect(() => {
@@ -58,6 +58,7 @@ function Movies() {
   }
 
   function handleSearchSubmit(searchText, toggle) {
+    setError(null);
     if (allMovies) {
       saveFilteredMovies(allMovies, toggle, searchText);
     } else {

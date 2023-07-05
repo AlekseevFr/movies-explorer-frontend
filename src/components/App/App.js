@@ -16,7 +16,7 @@ import React, { useState, useCallback } from 'react';
 
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const history = useHistory();
 
@@ -32,13 +32,15 @@ const App = () => {
 
     if (token) {
       getUserInfo()
+    } else {
+      setCurrentUser(null);
     }
   }, [getUserInfo, history])
 
   function handleLogin(data) {
-    return mainapi.login(data).then((res) => {
+    return mainapi.login(data).then(async (res) => {
       localStorage.setItem('token', res.token);
-      getUserInfo();
+      await getUserInfo();
       history.push("/movies");
       return;
     }).catch((error) => error);
@@ -66,6 +68,8 @@ const App = () => {
       handleLogin({email: data.email, password: data.password})
     }).catch((error) => error);
   }
+
+  if (currentUser === undefined) return null;
 
   return <div className="app">
     <CurrentUserContext.Provider value={currentUser}>

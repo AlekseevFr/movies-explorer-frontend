@@ -54,7 +54,7 @@ const MoviesCard = ({movie, isSaved, handleMovieClick}) => {
         <span className="moviescard__duration">{
           Math.floor(duration / 60)
         }:{
-          duration % 60
+          String(duration%60).padStart(2, '0')
         }</span>
       </div>
       {

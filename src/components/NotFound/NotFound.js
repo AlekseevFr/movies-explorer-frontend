@@ -11,7 +11,8 @@ function NotFound() {
         <p className="notfound__text">Страница не найдена</p>
       </div>
       
-      <button className="notfound__button" type="button" onClick={() => history.goBack()} >Назад</button>
+      <button className="notfound__button" type="button" onClick={() => history.goBack()}>Назад</button>
+    {/* Возвращает именно на страницу назад, а не на главную как в замечании */}
     </div>
   );
 }
