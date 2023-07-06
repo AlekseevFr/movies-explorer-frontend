@@ -4,6 +4,8 @@
   grid-template-rows: repeat(3, min-content);
   box-sizing: border-box;
   object-fit: cover;
+  text-decoration: none;
+  border: none;
 }
 
 .moviescard__info {

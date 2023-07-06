@@ -1,95 +1,63 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import MoreButton from '../MoreButton/MoreButton';
 import './MoviesCardList.css';
-import Poster1 from '../../images/Film1.jpg';
-import Poster2 from '../../images/Film2.jpg';
-import Poster3 from '../../images/Film3.jpg';
-import Poster4 from '../../images/Film4.jpg';
-import Poster5 from '../../images/Film5.jpg';
-import Poster6 from '../../images/Film6.jpg';
 
 
-function MoviesCardList({isSaved}) {
-  
+const changeWidth = () => {
+  if (window.innerWidth < 480) {
+    return { defaultNumber: 5, setNumberToMap: 2 };
+  }
+  if (window.innerWidth >= 480 && window.innerWidth <= 768) {
+    return { defaultNumber: 8, setNumberToMap: 2 };
+  }
+  if (window.innerWidth > 768) {
+    return { defaultNumber: 12, setNumberToMap: 3 };
+  }
+}
+
+function MoviesCardList({isSaved, movies, handleMovieClick}) {
+  const [pageState, setPageState] = useState(() => changeWidth());
+
+  const { defaultNumber } = pageState; 
+
+  useEffect(() => {
+    const resizeHandle = () => {
+      setTimeout(()=>{
+        setPageState(changeWidth());
+      },500);      
+    }
+    window.addEventListener('resize', resizeHandle);
+    return () => {
+      window.removeEventListener('resize', resizeHandle);
+    }
+  }, []);
+
+  const handleMoreClick = () => {
+    setPageState((prevState) => ({
+      ...prevState,
+      defaultNumber: prevState.defaultNumber + prevState.setNumberToMap
+    }))
+}
+ const showMoreButton =() => {
+  return movies?.length>=defaultNumber ? <MoreButton onClick={handleMoreClick} /> : null 
+}
+
   return (
     <>
       <ul className='movieslist'>
-        <MoviesCard poster={Poster1}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={true}
-          isSaved={isSaved}/>
+        {
+        movies?.slice(0, defaultNumber).map((movie) => <MoviesCard
+          key={movie.id}
+          movie={movie}
+          isSaved={isSaved}
+          handleMovieClick={handleMovieClick} 
+        />)
+      } </ul>
 
-        <MoviesCard poster={Poster2}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={true}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster3}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={true}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster4}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster5}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster6}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster1}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster2}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster3}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster4}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster5}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-
-        <MoviesCard poster={Poster6}
-          title='33 слова о дизайне'
-          duration='1ч 42м'
-          favorite={false}
-          isSaved={isSaved}/>
-      </ul>
-
-      <button className="movieslist__button" type="button">Ещё</button>
+   {showMoreButton()}     
+      
     </>
-
   );
 }
 

@@ -152,3 +152,7 @@
     margin-right: 14px;
   }
 }
+.searchform__error {
+display: flex;
+justify-content: center;
+}

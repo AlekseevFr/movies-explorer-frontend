@@ -3,6 +3,9 @@ import './Header.css';
 import Logo from '../Logo/Logo';
 import Icon from '../../images/Icon.svg'
 import Menu from '../../images/Menu.svg'
+import { NavLink } from 'react-router-dom';
+
+const tabs = [{ title: 'Фильмы', to: '/movies' }, { title: 'Сохраненные Фильмы', to: '/saved-movies' }];
 
 function Header({ isLoggedIn, handleMenuClick }) {
   return (
@@ -11,11 +14,15 @@ function Header({ isLoggedIn, handleMenuClick }) {
       {isLoggedIn ? (
         <>
           <div className='header__films'>
-            <a className='header__film' href='/movies'>Фильмы</a>
-            <a className='header__saved-films' href='/saved-movies'>Сохраненные Фильмы</a>
+            {tabs.map((tab) => (
+              <NavLink key={tab.to} to={tab.to} className={isActive => "header__film" + (isActive ? "-active" : "")}>
+                {tab.title}
+             </NavLink>
+            ))}
           </div>
           <div className='header__in'> 
-            <a className='header__acc' href='/profile'>Аккаунт</a>
+            {/* <a className='header__acc' href='/profile'>Аккаунт</a> */}
+            <NavLink to="/profile" className={isActive => "header__acc" + (isActive ? "-active" : "")}>Аккаунт</NavLink>
             <img className='header__icon' src={Icon}  alt="человечек"/>
           </div>
           <button className='header__menu-button' onClick={handleMenuClick}>
@@ -25,9 +32,9 @@ function Header({ isLoggedIn, handleMenuClick }) {
       ) : (
         <div className='header__auth'>
         <a href='/signup' className='header__reg'>Регистрация</a>
-        <botton className='header__signin'>
+        <button className='header__signin'>
           <a href='/signin' className='header__enter'>Войти</a>
-        </botton>
+        </button>
       </div>
       )}
     </header>
